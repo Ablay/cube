@@ -1,0 +1,177 @@
+/* scss --watch scss/style.scss:css/style.css */
+$container_size: 600; /*сыртқы контейнердің көлемі*/
+$cube_start_size: 14; /*ең кішкентай кубтың көлемі*/ 
+$size_step: 10; /*келесі куб неше пиксельге үлкеюі керек*/
+$cube_col: 30; /*кубтар саны*/
+
+$anim_duration: 15; /*анимация ұзақтығы*/
+$anim_delay: 2000; /*анимация неше мс кейін басталуы керек*/
+$anim_delay_step: 250; /*келесі кубта неше мс кейін анимация басталуы керек*/
+
+$rotateX_start: 35.3; /*35.3*/
+$rotateY_start: 45; /*45*/
+
+$rotateX_end: 35.3; /*35.3*/
+$rotateY_end: -135; /*-135*/
+
+$bezier: 'linear'; /*'cubic-bezier(0, 0.62, 0.54, 1.1)';*/
+
+.container {
+  width: $container_size+px;
+  height: $container_size+px;
+  position: relative;
+  margin: 0 auto;
+}
+
+[id^=cube] {
+  position: absolute;
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  -ms-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-transform: rotateX($rotateX_start+deg) rotateY($rotateY_start+deg);
+  -ms-transform: rotateX($rotateX_start+deg) rotateY($rotateY_start+deg);
+  -o-transform: rotateX($rotateX_start+deg) rotateY($rotateY_start+deg);
+  transform: rotateX($rotateX_start+deg) rotateY($rotateY_start+deg);
+  -webkit-animation-name: first_anim;
+  -o-animation-name: first_anim;
+  animation-name: first_anim;
+  -webkit-animation-iteration-count: infinite;
+  -o-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+  -webkit-animation-duration: $anim_duration+s;
+  -o-animation-duration: $anim_duration+s;
+  animation-duration: $anim_duration+s;
+  -webkit-transition-timing-function: $bezier;
+  -o-transition-timing-function: $bezier;
+  transition-timing-function: $bezier;
+}
+[id^=cube] figure {
+  margin: 0;
+  display: block;
+  position: absolute;
+  -webkit-box-shadow: inset 0 0 1px #000;
+  box-shadow: inset 0 0 1px #000;
+}
+
+
+@for $i from 1 through $cube_col {
+	#cube_#{$i} {
+	  width: $cube_start_size+px;
+	  height: $cube_start_size+px;
+	  top: $container_size/2+px;
+	  left: $container_size/2+px;
+	  -webkit-animation-delay: $anim_delay+ms;
+	  -o-animation-delay: $anim_delay+ms;
+	  animation-delay: $anim_delay+ms;
+	}
+
+	#cube_#{$i} figure {
+	  width: $cube_start_size+px;
+	  height: $cube_start_size+px;
+	}
+	#cube_#{$i} .front  {
+		-webkit-transform: rotateY(0deg) translateZ($cube_start_size/2+px);
+		-ms-transform: rotateY(0deg) translateZ($cube_start_size/2+px);
+		-o-transform: rotateY(0deg) translateZ($cube_start_size/2+px);
+		transform: rotateY(0deg) translateZ($cube_start_size/2+px);
+	}
+	#cube_#{$i} .back   {
+		-webkit-transform: rotateX(180deg) translateZ( $cube_start_size/2+px);
+		-ms-transform: rotateX(180deg) translateZ( $cube_start_size/2+px);
+		-o-transform: rotateX(180deg) translateZ( $cube_start_size/2+px);
+		transform: rotateX(180deg) translateZ( $cube_start_size/2+px);
+	}
+	#cube_#{$i} .right  {
+		-webkit-transform: rotateY(90deg) translateZ($cube_start_size/2+px);
+		-ms-transform: rotateY(90deg) translateZ($cube_start_size/2+px);
+		-o-transform: rotateY(90deg) translateZ($cube_start_size/2+px);
+		transform: rotateY(90deg) translateZ($cube_start_size/2+px);
+	}
+	#cube_#{$i} .left   {
+		-webkit-transform: rotateY(-90deg) translateZ($cube_start_size/2+px);
+		-ms-transform: rotateY(-90deg) translateZ($cube_start_size/2+px);
+		-o-transform: rotateY(-90deg) translateZ($cube_start_size/2+px);
+		transform: rotateY(-90deg) translateZ($cube_start_size/2+px);
+	}
+	#cube_#{$i} .top    {
+		-webkit-transform: rotateX(90deg) translateZ($cube_start_size/2+px);
+		-ms-transform: rotateX(90deg) translateZ($cube_start_size/2+px);
+		-o-transform: rotateX(90deg) translateZ($cube_start_size/2+px);
+		transform: rotateX(90deg) translateZ($cube_start_size/2+px);
+	}
+	#cube_#{$i} .bottom {
+		-webkit-transform: rotateX(-90deg) translateZ($cube_start_size/2+px);
+		-ms-transform: rotateX(-90deg) translateZ($cube_start_size/2+px);
+		-o-transform: rotateX(-90deg) translateZ($cube_start_size/2+px);
+		transform: rotateX(-90deg) translateZ($cube_start_size/2+px);
+	}
+	$cube_start_size: $cube_start_size+$size_step;
+	$container_size: $container_size - $size_step;
+	$anim_delay: $anim_delay+$anim_delay_step;
+}
+
+@-webkit-keyframes first_anim {
+	from {
+		-webkit-transform: rotateX($rotateX_start+deg) rotateY($rotateY_start+deg);
+		-ms-transform: rotateX($rotateX_start+deg) rotateY($rotateY_start+deg);
+		-moz-transform: rotateX($rotateX_start+deg) rotateY($rotateY_start+deg);
+		-o-transform: rotateX($rotateX_start+deg) rotateY($rotateY_start+deg);
+		transform: rotateX($rotateX_start+deg) rotateY($rotateY_start+deg);
+	}
+	to {
+		-webkit-transform: rotateX($rotateX_end+deg) rotateY($rotateY_end+deg);
+		-ms-transform: rotateX($rotateX_end+deg) rotateY($rotateY_end+deg);
+		-moz-transform: rotateX($rotateX_end+deg) rotateY($rotateY_end+deg);
+		-o-transform: rotateX($rotateX_end+deg) rotateY($rotateY_end+deg);
+		transform: rotateX($rotateX_end+deg) rotateY($rotateY_end+deg);
+	}
+}
+@-o-keyframes first_anim {
+	from {
+		-webkit-transform: rotateX($rotateX_start+deg) rotateY($rotateY_start+deg);
+		-ms-transform: rotateX($rotateX_start+deg) rotateY($rotateY_start+deg);
+		-moz-transform: rotateX($rotateX_start+deg) rotateY($rotateY_start+deg);
+		-o-transform: rotateX($rotateX_start+deg) rotateY($rotateY_start+deg);
+		transform: rotateX($rotateX_start+deg) rotateY($rotateY_start+deg);
+	}
+	to {
+		-webkit-transform: rotateX($rotateX_end+deg) rotateY($rotateY_end+deg);
+		-ms-transform: rotateX($rotateX_end+deg) rotateY($rotateY_end+deg);
+		-moz-transform: rotateX($rotateX_end+deg) rotateY($rotateY_end+deg);
+		-o-transform: rotateX($rotateX_end+deg) rotateY($rotateY_end+deg);
+		transform: rotateX($rotateX_end+deg) rotateY($rotateY_end+deg);
+	}
+}
+@-moz-keyframes first_anim {
+	from {
+		-webkit-transform: rotateX($rotateX_start+deg) rotateY($rotateY_start+deg);
+		-ms-transform: rotateX($rotateX_start+deg) rotateY($rotateY_start+deg);
+		-moz-transform: rotateX($rotateX_start+deg) rotateY($rotateY_start+deg);
+		-o-transform: rotateX($rotateX_start+deg) rotateY($rotateY_start+deg);
+		transform: rotateX($rotateX_start+deg) rotateY($rotateY_start+deg);
+	}
+	to {
+		-webkit-transform: rotateX($rotateX_end+deg) rotateY($rotateY_end+deg);
+		-ms-transform: rotateX($rotateX_end+deg) rotateY($rotateY_end+deg);
+		-moz-transform: rotateX($rotateX_end+deg) rotateY($rotateY_end+deg);
+		-o-transform: rotateX($rotateX_end+deg) rotateY($rotateY_end+deg);
+		transform: rotateX($rotateX_end+deg) rotateY($rotateY_end+deg);
+	}
+}
+@keyframes first_anim {
+	from {
+		-webkit-transform: rotateX($rotateX_start+deg) rotateY($rotateY_start+deg);
+		-ms-transform: rotateX($rotateX_start+deg) rotateY($rotateY_start+deg);
+		-moz-transform: rotateX($rotateX_start+deg) rotateY($rotateY_start+deg);
+		-o-transform: rotateX($rotateX_start+deg) rotateY($rotateY_start+deg);
+		transform: rotateX($rotateX_start+deg) rotateY($rotateY_start+deg);
+	}
+	to {
+		-webkit-transform: rotateX($rotateX_end+deg) rotateY($rotateY_end+deg);
+		-ms-transform: rotateX($rotateX_end+deg) rotateY($rotateY_end+deg);
+		-moz-transform: rotateX($rotateX_end+deg) rotateY($rotateY_end+deg);
+		-o-transform: rotateX($rotateX_end+deg) rotateY($rotateY_end+deg);
+		transform: rotateX($rotateX_end+deg) rotateY($rotateY_end+deg);
+	}
+}
